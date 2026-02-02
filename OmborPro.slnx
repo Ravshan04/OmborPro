@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OmborPro.Api/OmborPro.Api.csproj" />
+    <Project Path="src/OmborPro.Application/OmborPro.Application.csproj" />
+    <Project Path="src/OmborPro.Domain/OmborPro.Domain.csproj" />
+    <Project Path="src/OmborPro.Infrastructure/OmborPro.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OmborPro.Tests/OmborPro.Tests.csproj" />
+  </Folder>
+</Solution>
