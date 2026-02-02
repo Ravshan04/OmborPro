@@ -1,0 +1,6 @@
+@OmborPro.Api_HostAddress = http://localhost:5152
+
+GET {{OmborPro.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
