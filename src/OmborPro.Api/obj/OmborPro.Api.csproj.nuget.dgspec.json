@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\source\\repos\\OmborPro\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj": {}
+    "C:\\Users\\Public\\Backend\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\source\\repos\\OmborPro\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj": {
+    "C:\\Users\\Public\\Backend\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\source\\repos\\OmborPro\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Public\\Backend\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj",
         "projectName": "OmborPro.Api",
-        "projectPath": "C:\\Users\\HP\\source\\repos\\OmborPro\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\source\\repos\\OmborPro\\OmborPro\\src\\OmborPro.Api\\obj\\",
+        "projectPath": "C:\\Users\\Public\\Backend\\OmborPro\\src\\OmborPro.Api\\OmborPro.Api.csproj",
+        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Public\\Backend\\OmborPro\\src\\OmborPro.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
