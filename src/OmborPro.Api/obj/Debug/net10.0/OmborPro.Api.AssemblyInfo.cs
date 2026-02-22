@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OmborPro.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfb9601885a7c04d9bb03c4c124847eac318777d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1ae2e6238247c69bdedbc84ef62a5dd088583b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("OmborPro.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OmborPro.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
