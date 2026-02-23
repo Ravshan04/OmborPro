@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OmborPro.Application.Common.Interfaces;
-using OmborPro.Domain.Entities;
-using System;
+using OmborPro.Application.DTOs.Inventory;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace OmborPro.Api.Controllers;
 
@@ -20,24 +18,48 @@ public class WarehousesController : ControllerBase
         _warehouseService = warehouseService;
     }
 
+    private Guid GetOrgId()
+    {
+        var orgIdString = User.FindFirst("OrganizationId")?.Value;
+        return orgIdString != null ? Guid.Parse(orgIdString) : Guid.Empty;
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var orgIdString = User.FindFirst("OrganizationId")?.Value;
-        if (orgIdString == null) return Unauthorized();
-        
-        var warehouses = await _warehouseService.GetByOrganizationAsync(Guid.Parse(orgIdString));
-        return Ok(warehouses);
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _warehouseService.GetByOrganizationAsync(orgId);
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var result = await _warehouseService.GetByIdAsync(id);
+        return result != null ? Ok(result) : NotFound();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Warehouse warehouse)
+    public async Task<IActionResult> Create([FromBody] CreateWarehouseRequest request)
     {
-        var orgIdString = User.FindFirst("OrganizationId")?.Value;
-        if (orgIdString == null) return Unauthorized();
-        
-        warehouse.OrganizationId = Guid.Parse(orgIdString);
-        var created = await _warehouseService.CreateAsync(warehouse);
-        return Ok(created);
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _warehouseService.CreateAsync(request, orgId);
+        return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateWarehouseRequest request)
+    {
+        await _warehouseService.UpdateAsync(id, request);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _warehouseService.DeleteAsync(id);
+        return NoContent();
     }
 }

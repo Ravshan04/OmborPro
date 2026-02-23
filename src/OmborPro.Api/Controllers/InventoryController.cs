@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OmborPro.Application.Common.Interfaces;
-using OmborPro.Domain.Enums;
-using System;
+using OmborPro.Application.DTOs.Inventory;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace OmborPro.Api.Controllers;
 
@@ -13,47 +11,73 @@ namespace OmborPro.Api.Controllers;
 [Route("api/[controller]")]
 public class InventoryController : ControllerBase
 {
-    private readonly IStockService _stockService;
+    private readonly IInventoryService _inventoryService;
 
-    public InventoryController(IStockService stockService)
+    public InventoryController(IInventoryService inventoryService)
     {
-        _stockService = stockService;
+        _inventoryService = inventoryService;
     }
 
-    [HttpGet("product/{productId}/warehouse/{warehouseId}")]
-    public async Task<IActionResult> GetStock(Guid productId, Guid warehouseId)
+    private Guid GetOrgId()
     {
-        var stock = await _stockService.GetAvailableStockAsync(productId, warehouseId);
-        return Ok(new { ProductId = productId, WarehouseId = warehouseId, AvailableStock = stock });
+        var orgIdString = User.FindFirst("OrganizationId")?.Value;
+        return orgIdString != null ? Guid.Parse(orgIdString) : Guid.Empty;
     }
 
-    [HttpPost("movement")]
-    public async Task<IActionResult> RegisterMovement([FromBody] MovementRequest request)
+    // Categories
+    [HttpGet("categories")]
+    public async Task<IActionResult> GetCategories()
     {
-        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userIdString == null) return Unauthorized();
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.GetCategoriesAsync(orgId);
+        return Ok(result);
+    }
 
-        await _stockService.RegisterMovementAsync(
-            request.ProductId,
-            request.WarehouseId,
-            request.Quantity,
-            request.Type,
-            request.RefType,
-            request.RefId,
-            Guid.Parse(userIdString),
-            request.Notes
-        );
+    [HttpPost("categories")]
+    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request)
+    {
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.CreateCategoryAsync(request, orgId);
+        return Ok(result);
+    }
 
-        return Ok(new { Message = "Harakat muvaffaqiyatli saqlandi" });
+    // Suppliers
+    [HttpGet("suppliers")]
+    public async Task<IActionResult> GetSuppliers()
+    {
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.GetSuppliersAsync(orgId);
+        return Ok(result);
+    }
+
+    [HttpPost("suppliers")]
+    public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierRequest request)
+    {
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.CreateSupplierAsync(request, orgId);
+        return Ok(result);
+    }
+
+    // Customers
+    [HttpGet("customers")]
+    public async Task<IActionResult> GetCustomers()
+    {
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.GetCustomersAsync(orgId);
+        return Ok(result);
+    }
+
+    [HttpPost("customers")]
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
+    {
+        var orgId = GetOrgId();
+        if (orgId == Guid.Empty) return Unauthorized();
+        var result = await _inventoryService.CreateCustomerAsync(request, orgId);
+        return Ok(result);
     }
 }
-
-public record MovementRequest(
-    Guid ProductId,
-    Guid WarehouseId,
-    decimal Quantity,
-    MovementType Type,
-    ReferenceType RefType,
-    Guid RefId,
-    string Notes = ""
-);

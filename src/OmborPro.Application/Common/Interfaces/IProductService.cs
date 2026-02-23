@@ -7,9 +7,9 @@ namespace OmborPro.Application.Common.Interfaces;
 
 public interface IProductService
 {
+    Task<ProductDto> CreateProductAsync(CreateProductRequest request, Guid organizationId, Guid userId);
     Task<ProductDto> GetProductByIdAsync(Guid id);
     Task<IEnumerable<ProductDto>> GetProductsByOrganizationAsync(Guid organizationId);
-    Task<ProductDto> CreateProductAsync(CreateProductRequest request, Guid organizationId, Guid userId);
-    Task UpdateProductAsync(Guid id, CreateProductRequest request);
+    Task UpdateProductAsync(Guid id, UpdateProductRequest request);
     Task DeleteProductAsync(Guid id);
 }

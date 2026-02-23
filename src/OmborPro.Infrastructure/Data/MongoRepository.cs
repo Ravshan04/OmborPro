@@ -18,9 +18,6 @@ public class MongoRepository<T> : IRepository<T> where T : BaseEntity
 
     public MongoRepository(IOptions<MongoDbSettings> settings)
     {
-        // Register Guid serialization convention if not already registered
-        BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-        
         var client = new MongoClient(settings.Value.ConnectionString);
         var database = client.GetDatabase(settings.Value.DatabaseName);
         

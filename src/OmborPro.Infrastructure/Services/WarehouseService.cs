@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using OmborPro.Application.Common.Interfaces;
+using OmborPro.Application.DTOs.Inventory;
 using OmborPro.Domain.Entities;
 
 namespace OmborPro.Infrastructure.Services;
@@ -9,30 +11,40 @@ namespace OmborPro.Infrastructure.Services;
 public class WarehouseService : IWarehouseService
 {
     private readonly IRepository<Warehouse> _repository;
+    private readonly IMapper _mapper;
 
-    public WarehouseService(IRepository<Warehouse> repository)
+    public WarehouseService(IRepository<Warehouse> repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
-    public async Task<Warehouse> GetByIdAsync(Guid id)
+    public async Task<WarehouseDto?> GetByIdAsync(Guid id)
     {
-        return (await _repository.GetByIdAsync(id))!;
+        var warehouse = await _repository.GetByIdAsync(id);
+        return _mapper.Map<WarehouseDto>(warehouse);
     }
 
-    public async Task<IEnumerable<Warehouse>> GetByOrganizationAsync(Guid organizationId)
+    public async Task<IEnumerable<WarehouseDto>> GetByOrganizationAsync(Guid organizationId)
     {
-        return await _repository.FindAsync(w => w.OrganizationId == organizationId);
+        var warehouses = await _repository.FindAsync(w => w.OrganizationId == organizationId);
+        return _mapper.Map<IEnumerable<WarehouseDto>>(warehouses);
     }
 
-    public async Task<Warehouse> CreateAsync(Warehouse warehouse)
+    public async Task<WarehouseDto> CreateAsync(CreateWarehouseRequest request, Guid organizationId)
     {
+        var warehouse = _mapper.Map<Warehouse>(request);
+        warehouse.OrganizationId = organizationId;
         await _repository.AddAsync(warehouse);
-        return warehouse;
+        return _mapper.Map<WarehouseDto>(warehouse);
     }
 
-    public async Task UpdateAsync(Warehouse warehouse)
+    public async Task UpdateAsync(Guid id, UpdateWarehouseRequest request)
     {
+        var warehouse = await _repository.GetByIdAsync(id);
+        if (warehouse == null) throw new Exception("Warehouse not found");
+
+        _mapper.Map(request, warehouse);
         await _repository.UpdateAsync(warehouse);
     }
 

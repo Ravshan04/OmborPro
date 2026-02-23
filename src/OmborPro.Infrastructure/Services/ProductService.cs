@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using OmborPro.Application.Common.Interfaces;
 using OmborPro.Application.DTOs.Product;
 using OmborPro.Domain.Entities;
@@ -10,72 +11,52 @@ namespace OmborPro.Infrastructure.Services;
 public class ProductService : IProductService
 {
     private readonly IRepository<Product> _productRepository;
+    private readonly IMapper _mapper;
 
-    public ProductService(IRepository<Product> productRepository)
+    public ProductService(IRepository<Product> productRepository, IMapper mapper)
     {
         _productRepository = productRepository;
+        _mapper = mapper;
     }
 
     public async Task<ProductDto> CreateProductAsync(CreateProductRequest request, Guid organizationId, Guid userId)
     {
-        var product = new Product
-        {
-            OrganizationId = organizationId,
-            Sku = request.Sku,
-            Barcode = request.Barcode,
-            Name = request.Name,
-            Description = request.Description,
-            CategoryId = request.CategoryId,
-            Cost = request.Cost,
-            SellingPrice = request.SellingPrice,
-            CreatedBy = userId
-        };
+        var product = _mapper.Map<Product>(request);
+        product.OrganizationId = organizationId;
+        product.CreatedBy = userId;
 
         await _productRepository.AddAsync(product);
 
-        return MapToDto(product);
+        return _mapper.Map<ProductDto>(product);
     }
 
     public async Task<ProductDto> GetProductByIdAsync(Guid id)
     {
         var product = await _productRepository.GetByIdAsync(id);
-        return product != null ? MapToDto(product) : null!;
+        return _mapper.Map<ProductDto>(product);
     }
 
     public async Task<IEnumerable<ProductDto>> GetProductsByOrganizationAsync(Guid organizationId)
     {
         var products = await _productRepository.FindAsync(p => p.OrganizationId == organizationId);
-        var dtos = new List<ProductDto>();
-        foreach (var p in products) dtos.Add(MapToDto(p));
-        return dtos;
+        return _mapper.Map<IEnumerable<ProductDto>>(products);
     }
 
-    public Task UpdateProductAsync(Guid id, CreateProductRequest request)
+    public async Task UpdateProductAsync(Guid id, UpdateProductRequest request)
     {
-        throw new NotImplementedException();
+        var product = await _productRepository.GetByIdAsync(id);
+        if (product == null) throw new Exception("Product not found");
+
+        _mapper.Map(request, product);
+        await _productRepository.UpdateAsync(product);
     }
 
-    public Task DeleteProductAsync(Guid id)
+    public async Task DeleteProductAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    private ProductDto MapToDto(Product product)
-    {
-        return new ProductDto(
-            product.Id,
-            product.Sku,
-            product.Barcode,
-            product.Name,
-            product.Description,
-            product.CategoryId,
-            product.Unit.ToString(),
-            product.Cost,
-            product.SellingPrice,
-            product.Weight,
-            product.Length,
-            product.Width,
-            product.Height
-        );
+        var product = await _productRepository.GetByIdAsync(id);
+        if (product != null)
+        {
+            await _productRepository.DeleteAsync(product);
+        }
     }
 }

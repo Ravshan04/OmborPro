@@ -53,3 +53,20 @@ public enum AuditAction
     DELETE,
     VIEW
 }
+
+public enum CustomerStatus
+{
+    Active,
+    Inactive
+}
+
+public enum NotificationType
+{
+    LowStock,
+    OrderCreated,
+    OrderApproved,
+    OrderShipped,
+    OrderReceived,
+    OrderCancelled,
+    System
+}

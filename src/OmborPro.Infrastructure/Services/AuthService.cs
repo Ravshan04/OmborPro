@@ -40,6 +40,8 @@ public class AuthService : IAuthService
             user.Email,
             user.FirstName,
             user.LastName,
+            user.Phone,
+            user.AvatarUrl,
             user.OrganizationId
         );
     }
@@ -52,6 +54,7 @@ public class AuthService : IAuthService
             PasswordHash = BC.HashPassword(request.Password),
             FirstName = request.FirstName,
             LastName = request.LastName,
+            Phone = request.Phone,
             OrganizationId = request.OrganizationId,
             Roles = new List<string> { "User" }
         };
@@ -65,6 +68,8 @@ public class AuthService : IAuthService
             user.Email,
             user.FirstName,
             user.LastName,
+            user.Phone,
+            user.AvatarUrl,
             user.OrganizationId
         );
     }

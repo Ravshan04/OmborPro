@@ -12,11 +12,14 @@ public class Product : BaseEntity
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public Guid CategoryId { get; set; }
+    public Guid? SupplierId { get; set; }
     public UnitType Unit { get; set; }
+    public decimal Quantity { get; set; } // Current stock level
     public decimal ReorderPoint { get; set; }
     public decimal ReorderQuantity { get; set; }
     public decimal Cost { get; set; }
     public decimal SellingPrice { get; set; }
+    public string? Location { get; set; }
     public string Currency { get; set; } = "USD";
     
     // Dimensions

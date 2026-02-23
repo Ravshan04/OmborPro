@@ -9,6 +9,7 @@ public record RegisterRequest(
     string Password, 
     string FirstName, 
     string LastName, 
+    string? Phone,
     Guid OrganizationId);
 
 public record AuthResponse(
@@ -16,4 +17,21 @@ public record AuthResponse(
     string Email, 
     string FirstName, 
     string LastName, 
+    string? Phone,
+    string? AvatarUrl,
     Guid OrganizationId);
+
+public record ProfileDto(
+    Guid Id,
+    string Email,
+    string FirstName,
+    string LastName,
+    string? Phone,
+    string? AvatarUrl,
+    Guid OrganizationId);
+
+public record UpdateProfileRequest(
+    string FirstName,
+    string LastName,
+    string? Phone,
+    string? AvatarUrl);

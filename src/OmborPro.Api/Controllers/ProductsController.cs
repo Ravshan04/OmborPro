@@ -52,4 +52,18 @@ public class ProductsController : ControllerBase
             
         return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductRequest request)
+    {
+        await _productService.UpdateProductAsync(id, request);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _productService.DeleteProductAsync(id);
+        return NoContent();
+    }
 }

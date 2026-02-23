@@ -9,9 +9,12 @@ public record ProductDto(
     string Name,
     string Description,
     Guid CategoryId,
+    Guid? SupplierId,
     string Unit,
+    decimal Quantity,
     decimal Cost,
     decimal SellingPrice,
+    string? Location,
     decimal Weight,
     decimal Length,
     decimal Width,
@@ -24,7 +27,26 @@ public record CreateProductRequest(
     string Name,
     string Description,
     Guid CategoryId,
+    Guid? SupplierId,
     string Unit,
     decimal Cost,
-    decimal SellingPrice
+    decimal SellingPrice,
+    string? Location
+);
+
+public record UpdateProductRequest(
+    string Sku,
+    string Barcode,
+    string Name,
+    string Description,
+    Guid CategoryId,
+    Guid? SupplierId,
+    string Unit,
+    decimal Cost,
+    decimal SellingPrice,
+    string? Location,
+    decimal Weight,
+    decimal Length,
+    decimal Width,
+    decimal Height
 );
