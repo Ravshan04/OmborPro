@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OmborPro.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1ae2e6238247c69bdedbc84ef62a5dd088583b6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd78f886fccde1b9e84b9488b188d7b5cfb3cefe")]
 [assembly: System.Reflection.AssemblyProductAttribute("OmborPro.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OmborPro.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
