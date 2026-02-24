@@ -55,7 +55,7 @@ public class AuthService : IAuthService
             FirstName = request.FirstName,
             LastName = request.LastName,
             Phone = request.Phone,
-            OrganizationId = request.OrganizationId,
+            OrganizationId = request.OrganizationId ?? Guid.Empty,
             Roles = new List<string> { "User" }
         };
 
@@ -100,3 +100,4 @@ public class AuthService : IAuthService
         return tokenHandler.WriteToken(token);
     }
 }
+

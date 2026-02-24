@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OmborPro.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee821aeab407378e01fa09975f2d84d0b0c3e0ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+588fb5edfb1ff5f83e5c3e19b85b97d9290c3086")]
 [assembly: System.Reflection.AssemblyProductAttribute("OmborPro.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OmborPro.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

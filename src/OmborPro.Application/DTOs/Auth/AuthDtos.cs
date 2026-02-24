@@ -5,18 +5,18 @@ namespace OmborPro.Application.DTOs.Auth;
 public record LoginRequest(string Email, string Password);
 
 public record RegisterRequest(
-    string Email, 
-    string Password, 
-    string FirstName, 
-    string LastName, 
+    string Email,
+    string Password,
+    string FirstName,
+    string LastName,
     string? Phone,
-    Guid OrganizationId);
+    Guid? OrganizationId = null);
 
 public record AuthResponse(
-    string Token, 
-    string Email, 
-    string FirstName, 
-    string LastName, 
+    string Token,
+    string Email,
+    string FirstName,
+    string LastName,
     string? Phone,
     string? AvatarUrl,
     Guid OrganizationId);

@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Options;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using OmborPro.Application.Common.Interfaces;
 using OmborPro.Domain.Common;
@@ -16,12 +12,8 @@ public class MongoRepository<T> : IRepository<T> where T : BaseEntity
 {
     private readonly IMongoCollection<T> _collection;
 
-    public MongoRepository(IOptions<MongoDbSettings> settings)
+    public MongoRepository(IMongoDatabase database)
     {
-        var client = new MongoClient(settings.Value.ConnectionString);
-        var database = client.GetDatabase(settings.Value.DatabaseName);
-        
-        // Collection name is usually the class name pluralized or just the class name
         _collection = database.GetCollection<T>(typeof(T).Name.ToLower() + "s");
     }
 
@@ -37,7 +29,6 @@ public class MongoRepository<T> : IRepository<T> where T : BaseEntity
 
     public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
     {
-        // Combine predicate with soft-delete filter
         var filter = Builders<T>.Filter.And(
             Builders<T>.Filter.Where(predicate),
             Builders<T>.Filter.Eq(x => x.DeletedAt, null)
@@ -58,7 +49,6 @@ public class MongoRepository<T> : IRepository<T> where T : BaseEntity
 
     public async Task DeleteAsync(T entity)
     {
-        // Soft delete
         entity.DeletedAt = DateTime.UtcNow;
         await UpdateAsync(entity);
     }
